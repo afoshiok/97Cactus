@@ -1,15 +1,24 @@
-import { Schema } from "mongoose";
+import { Schema, Types } from "mongoose";
+import crypto from 'crypto'
 
 interface Creator {
-    id: string;
+    _id: Types.ObjectId;
     name: string;
 }
 
+interface Challenge {
+    _id: Types.ObjectId;
+    startDate: Date;
+    endDate: Date;
+
+}
+
 interface SubmittedSong {
+    _id: Types.ObjectId;
     name: string;
-    songLink: string;
-    creator: string;
-    dateSubmitted: Date;
+    songLink?: string;
+    creator: Types.ObjectId;
+    dateSubmitted?: Date;
     artistSampled: string;
     sampledAlbum: string;
     albumYear: number;
@@ -17,7 +26,13 @@ interface SubmittedSong {
 }
 
 const SongSchema = new Schema<SubmittedSong>({
+    _id: { type: Schema.Types.ObjectId, required: true, default: crypto.randomUUID() },
     name: { type: String, required: true },
-    creator: { type: String, required: true }
-    //finish schema 
+    songLink: { type: String },
+    creator: { type: Schema.Types.ObjectId, required: true },
+    dateSubmitted: { type: Date },
+    artistSampled: { type: String, required: true },
+    sampledAlbum: { type: String, required: true },
+    albumYear: { type: Number, required: true },
+    sampledSong: { type: String, required: true }
 })
