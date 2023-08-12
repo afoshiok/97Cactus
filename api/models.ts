@@ -28,10 +28,10 @@ interface SubmittedSong {
 
 const SongSchema = new Schema<SubmittedSong>({
     _id: { type: Schema.Types.ObjectId, required: true, default: crypto.randomUUID() },
-    challengeId: { type: Schema.Types.ObjectId, required: true}, //add ref to challenge documents
+    challengeId: { type: Schema.Types.ObjectId, required: true, ref: "Challenge"}, 
     name: { type: String, required: true },
     songLink: { type: String },
-    creator: { type: Schema.Types.ObjectId, required: true }, //add ref to creator documents
+    creator: { type: Schema.Types.ObjectId, required: true, ref: "Creator" },
     dateSubmitted: { type: Date },
     artistSampled: { type: String, required: true },
     sampledAlbum: { type: String, required: true },
